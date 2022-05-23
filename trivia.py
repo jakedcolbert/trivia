@@ -23,10 +23,21 @@ CLEAR = "\033[H\033[J" # Clear the terminal window
 
 LIMIT = 20
 
+# Get the trivia categories from the API
+
+def getCategories():
+	categories = []
+	url = "https://the-trivia-api.com/api/categories"
+	r = requests.get(url)
+	result = json.loads(r.text)
+	for category in result:
+		categories.append(category)
+	return categories
+
 # Get the trivia questions from the API
 
-def getTrivia():
-	url = "https://the-trivia-api.com/api/questions?limit=" + str(LIMIT)
+def getTrivia(category):
+	url = "https://the-trivia-api.com/api/questions?categories=" + category + "limit=" + str(LIMIT)
 	r = requests.get(url)
 	result = json.loads(r.text)
 	return result
@@ -39,9 +50,24 @@ if __name__ == "__main__":
 	correct = 0;
 	
 	print(YELLOW + "Time for trivia!!\n" + END)
-	for question in getTrivia():
+	categories = getCategories()
+
+	for i in range(1, len(categories)):
+		print(str(i) + ") " + categories[i])
+	
+	while(True):
+		category = int(input("\nSelect a category...\n"))
+		if category in range(1, len(categories)):
+			break;
+		else:
+			print("\n" + RED + "Please choose a number for one of the categories above" + END + "\n")
+	
+	print(CLEAR)
+	
+	for question in getTrivia(categories[category]):
 		answers = []
 		
+		print("The category is: " + categories[category])
 		print("Question: " + question["question"] + "\n")
 		
 		answers = question["incorrectAnswers"]
