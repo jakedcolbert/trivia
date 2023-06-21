@@ -128,9 +128,9 @@ if __name__ == "__main__":
 
 		if (answers[int(choice) - 1] == question["correctAnswer"]):
 			correct += 1
-			print(GREEN + "\nThat's correct! Nice job!\n" + END)
+			print(GREEN + "\nThat's correct! The answer is \'" + question["correctAnswer"] + "\'\n" + END)
 		else:
-			print(RED + "\nThe correct answer was " + question["correctAnswer"] + "\n" + END)
+			print(RED + "\nThe correct answer was \'" + question["correctAnswer"] + "\'\n" + END)
 
 		input("Press enter to continue...")
 		print(CLEAR)
